@@ -11,10 +11,9 @@ import { defineMcpClientConnection } from "eve/connections";
  * 金数据用的是 Basic 而不是 Bearer,所以这里用 `headers` 直接设置 Authorization,
  * 而不是 eve 的 `auth.getToken`(后者会强制发 `Bearer <token>`,会被金数据拒绝)。
  *
- * 这是 app-scoped(应用级)共享凭证:agent 以这一个金数据账号的身份操作所有会话。
- * 如果需要「每个终端用户各自授权自己的金数据账号」,改用 OAuth
- * (https://open.jinshuju.net/mcp/oauth/),并把下面的 `headers` 换成
- * Vercel Connect 或自定义 interactive authorization。见 .env.example 的说明。
+ * 凭证 = 当前客户项目的金数据账号,从环境变量读取(见 .env.example)。
+ * 本 agent 一次服务一个客户项目,换客户时换这套环境变量即可,无需在会话里区分多租户。
+ * (若确实需要「每个终端用户各自授权」,可改用 OAuth:https://open.jinshuju.net/mcp/oauth/)
  */
 
 // 需要人工确认的工具:会新增 / 修改 / 删除数据或表单结构。
