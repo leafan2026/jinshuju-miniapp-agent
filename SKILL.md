@@ -1,30 +1,47 @@
 ---
 name: jinshuju-miniapp
-description: 规划、搭建或迭代以金数据 Tables 为数据核心的微信小程序；涵盖前端交互样机、金数据 MCP 表结构、数据映射与安全发布。
+description: 使用金数据 Tables、Agent、微信小程序和微信云托管，从业务需求与设计参考制作可验收的小程序，或迭代已有应用；覆盖交互规范、MCP 建表、数据适配、开发与部署。个人工作台是案例，不是固定模板。
 metadata:
-  short-description: 搭建金数据 Tables 驱动的微信小程序
+  short-description: 制作金数据 Tables 与微信云托管驱动的小程序
 ---
 
-# 金数据小程序搭建
+# 金数据小程序制作
 
-用于把业务需求落实为「微信小程序 + 金数据 Tables」：先确认体验和字段，再创建或核对表结构，最后实施与发布。不要把本 Skill 绑定到 Eve、Vercel 或任何特定 Agent 运行时。
+本仓库是可分享的制作 Skill，业务成品位于独立应用仓库。Agent 负责分析、设计、实现与验证；应用运行不要求持续启动 Agent，也不绑定 Eve、Vercel 或特定模型厂商。
 
-## 工作边界
+运行链路：微信小程序 `wx.cloud.callContainer` → 微信云托管可信服务 → 金数据 Tables。Agent 使用可用的金数据 MCP 管理表与数据；运行服务采用核验过的金数据接口。两者的授权与生命周期分别处理。
 
-- 金数据 Tables 是业务数据核心。小程序不应保存或直接暴露 Access Token；由可信服务端以 `Authorization: Bearer <access_token>` 调用金数据 API。
-- Access Token 只从受控配置读取，不写入源码、样机、对话、命令行参数或日志。提醒用户创建时立即保存，并将服务端出口 IP 加入金数据白名单。
-- 当前会话若有金数据 MCP，先搜索其当前能力与参数 schema，再调用动态发现的工具。不能假设工具名、字段 key 或 API 返回格式。
-- 当前会话没有可用的金数据 MCP 或授权时，如实说明无法直接执行；不要把普通建表请求改写成启动 `npm run dev`、选择模型、安装 Vercel CLI 或登录 Vercel 的步骤。只有用户明确要求排查某个本地运行环境时，才讨论该环境。
-- 创建、修改或删除 Table、字段、条目之前，先展示变更范围并取得确认；完成后用当前 MCP 的只读能力核验结果，核验前不得声称已创建。
-- 引用本仓库的样机或规格前，先核实文件存在；不得编造本地路径或成品文件名。
+## 先判断任务与仓库
 
-## 推荐流程
+- 制作/改进通用流程、设计规范、案例分析：修改本 Skill 仓库。
+- 制作具体应用或修复其页面、接口：修改用户指定的应用仓库。先核对 remote、分支、未提交改动和实际目录；安装 Skill 的目录不是应用代码输出目录。
+- 沿用当前用户需求和已验收效果。历史 HTML 与案例只能补充信息，不能覆盖新需求或把成品回退为简化样机。
+- 默认交付本地可验收成果；建表、数据写入、推送和部署按本次授权范围执行。已明确授权的范围无需反复确认；破坏性变更、未知部署触发器或范围扩大时停下来说明。
 
-1. 明确用户、业务目标、主要页面和数据实体；按需阅读 [需求与凭证准备](references/collect-requirements.md)。
-2. 尚无原型时，阅读 [前端样机方法](references/frontend-demo.md)；设计方向和可打开的参考分别在 [design-directions.md](references/design-directions.md) 与 [style-gallery.html](references/style-gallery.html)。
-3. 规划或操作金数据 Tables 时，阅读 [表结构与 MCP 操作](references/jinshuju-schema.md)，并按字段映射模板工作。
-4. 实施小程序与服务端，并在发布前阅读 [部署约束](references/deployment.md) 和 [交付不变量](references/delivery-invariants.md)。
+## 分阶段执行
 
-## 已附样机
+按任务读取相应参考，不要求迭代一个组件时重做全套流程。
 
-[个人工作台样机](assets/personal-workbench-demo/personal-workbench.html) 是离线、内存假数据的可交互 HTML 原型，覆盖工作项目/任务、个人计划和随笔。使用或改造前阅读同目录的 `README.md` 与 `personal-workbench-spec.md`；它不含真实凭证，也不连接金数据。
+| 阶段 | 必读参考 | 可交验产出 |
+| --- | --- | --- |
+| 需求与范围 | [需求与接入准备](references/collect-requirements.md) | 角色/权限、业务流程、实体、页面、约束与待决项 |
+| 交互与视觉 | [前端样机](references/frontend-demo.md)、[设计与交互规范](references/design-spec.md) | 设计规格、页面/状态/动作对应表、必要的可交互样机 |
+| 数据绑定 | [表结构与 MCP](references/jinshuju-schema.md) | 核验过的表结构、字段映射、CRUD 与权限契约 |
+| 实施与联调 | [实现约定](references/implementation.md) | 小程序、云托管服务、模拟测试、配置示例 |
+| 验收与交付 | [部署](references/deployment.md)、[交付不变量](references/delivery-invariants.md) | 验证证据、未验收项、经授权的发布与回退记录 |
+
+在应用仓库维护一份简短的实施记录，使用 [项目交付模板](assets/project-contract-template.md) 记录上述成果及尚未绑定项；无需为填写模板而阻塞已明确的工作。
+
+## 必须保持的边界
+
+- Access Token 与其他认证秘密只在受控服务端配置中保存，不进入 Git、小程序包、聊天或日志。AppID、环境 ID、服务名和仅作资源标识的 Table Token 可入库，但它们不提供访问控制。
+- 管理金数据时先发现当前 MCP 能力和参数，再执行与读回核验。未连接或未授权时继续设计、模拟实现，明确真实联调未完成；不得编造工具名、字段 key 或“已创建”的结果，也不要求用户改用其他 Agent 框架。
+- 云托管不能悄悄替换成云函数；用户明确变更架构才重新设计。认证方式由业务角色和数据隔离需求决定，不套用案例的共享口令或仅信任客户端提交的身份。
+- 参考案例不意味着可复用其生产资源或任意传播图片。新应用独立配置表、服务和身份规则，核对素材权利后再分享。
+- JS 测试通过不等于视觉一致，Git 推送不等于后端已部署，小程序上传不等于正式发布。报告各阶段的真实证据。
+
+## 案例与风格参考
+
+按 [案例目录](references/cases/index.md) 选择相关案例。第一个是 [个人工作台](references/cases/personal-workbench/index.md)，覆盖项目任务、生活计划与随笔；它包含原型与后续实现经验，不能作为所有新应用的四表、四 Tab 或登录默认值。
+
+没有指定风格时可参考 [设计方向](references/design-directions.md)；已有用户原型时优先提取其规则，不另选主题。案例增加时按目录约定补充，不把每个案例的代码复制到通用入口。
