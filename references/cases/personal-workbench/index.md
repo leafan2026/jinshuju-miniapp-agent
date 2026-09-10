@@ -4,6 +4,7 @@
 
 - [演示源码](https://github.com/leafan2026/personal-workbench-miniapp)：小程序、云托管服务和测试；维护前核实可访问性与最新版本。
 - 本次案例整理依据应用提交 `0b189f8` 及其中的现有实现；这不是线上版本或用户已验收全部功能的证明。
+- 后续于 2026-09-10 只读核对 `main` 提交 `1a777547f7173826ff419767bf09996b49813c6a` 的 README、部署/认证说明、Dockerfile、项目配置与历史评审，补充 [零代码带搭示例](guided-walkthrough.md)。该检查不代表全面代码复审或线上验收，原有技术参考仍需按实际维护版本核对。
 - [离线 HTML 原型](../../../assets/personal-workbench-demo/personal-workbench.html) 与 [原型说明](../../../assets/personal-workbench-demo/README.md)：早期交互参考，不是最新成品。源码已有后续日历、编辑面板、块编辑与口令登录变化，不能回退覆盖。
 - 作者本机文件夹名（如 jsj_my）不是其他使用者的路径要求。
 
@@ -17,6 +18,7 @@
 
 | 场景 | 案例参考 | 演示仓库入口 |
 | --- | --- | --- |
+| 从零引导用户完成 | [带搭示例](guided-walkthrough.md) | README、docs/passphrase-access.md、project.config.json、server/Dockerfile |
 | 视觉移植、日历、手势、编辑 | [前端经验](frontend.md) | miniprogram/pages、components、custom-tab-bar |
 | 字段、分页、缓存、图片 | [数据与故障](data-and-failures.md) | miniprogram/utils、server/index.js、tests |
 | 认证、配置与发布 | [运行与发布](runtime-and-release.md) | server/auth.js、server/Dockerfile、docs/passphrase-access.md |

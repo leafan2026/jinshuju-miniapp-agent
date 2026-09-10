@@ -1,4 +1,4 @@
 interface:
-  display_name: "金数据小程序制作"
-  short_description: "结合金数据 Tables、Agent 与微信云托管，制作可验收的微信小程序"
-  default_prompt: "使用 $jinshuju-miniapp，根据我的业务需求和设计参考，在指定应用仓库制作金数据 Tables 与微信云托管驱动的小程序，并分阶段验收。"
+  display_name: "金数据小程序零代码搭建指导"
+  short_description: "面向不会写代码的用户，一步一步完成金数据小程序的需求、预览、接入与发布"
+  default_prompt: "使用 $jinshuju-miniapp，一步一步带我搭建金数据小程序。我不会写代码，请先了解用途，每次只告诉我当前要做什么，由你完成代码、配置和排错。"
